@@ -1,4 +1,3 @@
-
 pub fn star_1(data: String) {
     let values = parse(&data);
     let report = expense_report(&values[..]).unwrap();
@@ -6,7 +5,7 @@ pub fn star_1(data: String) {
 }
 
 pub fn star_2(data: String) {
-    let values =  parse(&data);
+    let values = parse(&data);
     let report = triple_expense_report(&values[..]).unwrap();
     println!("{}", report);
 }
@@ -19,11 +18,15 @@ fn parse(data: &str) -> Vec<u32> {
 }
 
 fn expense_report(values: &[u32]) -> Option<u32> {
-    AllPairs::new(values).find(|(a, b)| *a + *b == 2020).map(|(a, b)| a * b)
+    AllPairs::new(values)
+        .find(|(a, b)| *a + *b == 2020)
+        .map(|(a, b)| a * b)
 }
 
 fn triple_expense_report(values: &[u32]) -> Option<u32> {
-    AllTriples::new(values).find(|(a, b, c)| *a + *b + *c == 2020).map(|(a, b, c)| a * b * c)
+    AllTriples::new(values)
+        .find(|(a, b, c)| *a + *b + *c == 2020)
+        .map(|(a, b, c)| a * b * c)
 }
 
 struct AllPairs<'a, T> {
@@ -102,7 +105,11 @@ impl<'a, T> Iterator for AllTriples<'a, T> {
             return None;
         }
 
-        let triple = (&self.values[self.cur_left], &self.values[self.cur_middle], &self.values[self.cur_right]);
+        let triple = (
+            &self.values[self.cur_left],
+            &self.values[self.cur_middle],
+            &self.values[self.cur_right],
+        );
         self.cur_right += 1;
         Some(triple)
     }
@@ -144,7 +151,10 @@ mod tests {
     fn four_value_slice_produces_all_six_pairs() {
         let values = vec![1, 2, 3, 4];
         let pairs = AllPairs::new(&values[..]).collect::<Vec<_>>();
-        assert_eq!(pairs, vec![(&1, &2), (&1, &3), (&1, &4), (&2, &3), (&2, &4), (&3, &4)]);
+        assert_eq!(
+            pairs,
+            vec![(&1, &2), (&1, &3), (&1, &4), (&2, &3), (&2, &4), (&3, &4)]
+        );
     }
 
     #[test]
@@ -179,6 +189,9 @@ mod tests {
     fn four_value_slice_produces_all_four_triples() {
         let values = vec![1, 2, 3, 4];
         let triples = AllTriples::new(&values[..]).collect::<Vec<_>>();
-        assert_eq!(triples, vec![(&1, &2, &3), (&1, &2, &4), (&1, &3, &4), (&2, &3, &4)]);
+        assert_eq!(
+            triples,
+            vec![(&1, &2, &3), (&1, &2, &4), (&1, &3, &4), (&2, &3, &4)]
+        );
     }
 }

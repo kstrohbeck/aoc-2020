@@ -10,7 +10,7 @@ pub fn star_2(data: String) {
         .iter()
         .map(|(r, d)| traverse_slope(&data, *r, *d))
         .product::<usize>();
-    
+
     println!("{}", count);
 }
 

@@ -1,9 +1,9 @@
 use nom::{
-    IResult,
     bytes::complete::tag,
     character::complete::{alpha1, anychar, digit1, multispace1, space1},
     combinator::map_opt,
     multi::separated_list0,
+    IResult,
 };
 
 pub fn star_1(data: String) {
@@ -32,7 +32,11 @@ struct PasswordEntry<'a> {
 
 impl<'a> PasswordEntry<'a> {
     fn is_valid(&self) -> bool {
-        let count = self.password.chars().filter(|c| *c == self.rule_char).count() as u32;
+        let count = self
+            .password
+            .chars()
+            .filter(|c| *c == self.rule_char)
+            .count() as u32;
         count >= self.rule_min && count <= self.rule_max
     }
 
@@ -77,43 +81,49 @@ fn u32_(i: &str) -> IResult<&str, u32> {
 
 #[cfg(test)]
 mod tests {
-    use super::{PasswordEntry, password_entry, password_entries};
+    use super::{password_entries, password_entry, PasswordEntry};
 
     #[test]
     fn password_entry_parses() {
         let i = "1-3 a: abcde";
         let (_, entry) = password_entry(i).unwrap();
-        assert_eq!(entry, PasswordEntry {
-            password: "abcde",
-            rule_min: 1,
-            rule_max: 3,
-            rule_char: 'a',
-        });
+        assert_eq!(
+            entry,
+            PasswordEntry {
+                password: "abcde",
+                rule_min: 1,
+                rule_max: 3,
+                rule_char: 'a',
+            }
+        );
     }
 
     #[test]
     fn password_entries_parse() {
         let i = "1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc\n";
         let (_, entries) = password_entries(i).unwrap();
-        assert_eq!(entries, vec![
-            PasswordEntry {
-                password: "abcde",
-                rule_min: 1,
-                rule_max: 3,
-                rule_char: 'a',
-            },
-            PasswordEntry {
-                password: "cdefg",
-                rule_min: 1,
-                rule_max: 3,
-                rule_char: 'b',
-            },
-            PasswordEntry {
-                password: "ccccccccc",
-                rule_min: 2,
-                rule_max: 9,
-                rule_char: 'c',
-            },
-        ]);
+        assert_eq!(
+            entries,
+            vec![
+                PasswordEntry {
+                    password: "abcde",
+                    rule_min: 1,
+                    rule_max: 3,
+                    rule_char: 'a',
+                },
+                PasswordEntry {
+                    password: "cdefg",
+                    rule_min: 1,
+                    rule_max: 3,
+                    rule_char: 'b',
+                },
+                PasswordEntry {
+                    password: "ccccccccc",
+                    rule_min: 2,
+                    rule_max: 9,
+                    rule_char: 'c',
+                },
+            ]
+        );
     }
 }
