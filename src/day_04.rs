@@ -1,4 +1,5 @@
 use self::{color::Color, eye_color::EyeColor, height::Height, year::Year};
+use crate::utils::u32_;
 use nom::{
     branch::alt,
     bytes::complete::{tag, take_while_m_n},
@@ -95,10 +96,6 @@ mod height {
     }
 
     fn height(i: &str) -> IResult<&str, Height> {
-        fn u32_(i: &str) -> IResult<&str, u32> {
-            map_res(digit1, |s: &str| s.parse::<u32>())(i)
-        }
-
         map(pair(u32_, measurement), |(amt, msr)| Height::new(amt, msr))(i)
     }
 

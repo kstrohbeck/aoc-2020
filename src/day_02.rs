@@ -1,10 +1,5 @@
-use nom::{
-    bytes::complete::tag,
-    character::complete::{alpha1, anychar, digit1, multispace1, space1},
-    combinator::map_opt,
-    multi::separated_list0,
-    IResult,
-};
+use crate::utils::u32_;
+use nom::IResult;
 
 pub fn star_1(data: String) {
     let entries = parse(&data);
@@ -54,10 +49,17 @@ impl<'a> PasswordEntry<'a> {
 }
 
 fn password_entries<'a>(i: &'a str) -> IResult<&'a str, Vec<PasswordEntry<'a>>> {
+    use nom::{character::complete::multispace1, multi::separated_list0};
+
     separated_list0(multispace1, password_entry)(i)
 }
 
 fn password_entry<'a>(i: &'a str) -> IResult<&'a str, PasswordEntry<'a>> {
+    use nom::{
+        bytes::complete::tag,
+        character::complete::{alpha1, anychar, space1},
+    };
+
     let (i, rule_min) = u32_(i)?;
     let (i, _) = tag("-")(i)?;
     let (i, rule_max) = u32_(i)?;
@@ -73,10 +75,6 @@ fn password_entry<'a>(i: &'a str) -> IResult<&'a str, PasswordEntry<'a>> {
         rule_char,
     };
     Ok((i, entry))
-}
-
-fn u32_(i: &str) -> IResult<&str, u32> {
-    map_opt(digit1, |s: &str| s.parse::<u32>().ok())(i)
 }
 
 #[cfg(test)]

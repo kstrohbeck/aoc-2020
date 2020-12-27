@@ -12,6 +12,20 @@ mod day_09;
 mod day_10;
 mod day_11;
 mod day_12;
+mod day_13;
+mod day_14;
+mod day_15;
+mod day_16;
+mod day_17;
+mod day_18;
+mod day_19;
+mod day_20;
+mod day_21;
+mod day_22;
+mod day_23;
+mod day_24;
+mod day_25;
+mod utils;
 
 fn main() {
     let mut args = env::args();
@@ -49,6 +63,32 @@ fn main() {
         (11, 2) => day_11::star_2,
         (12, 1) => day_12::star_1,
         (12, 2) => day_12::star_2,
+        (13, 1) => day_13::star_1,
+        (13, 2) => day_13::star_2,
+        (14, 1) => day_14::star_1,
+        (14, 2) => day_14::star_2,
+        (15, 1) => day_15::star_1,
+        (15, 2) => day_15::star_2,
+        (16, 1) => day_16::star_1,
+        (16, 2) => day_16::star_2,
+        (17, 1) => day_17::star_1,
+        (17, 2) => day_17::star_2,
+        (18, 1) => day_18::star_1,
+        (18, 2) => day_18::star_2,
+        (19, 1) => day_19::star_1,
+        (19, 2) => day_19::star_2,
+        (20, 1) => day_20::star_1,
+        (20, 2) => day_20::star_2,
+        (21, 1) => day_21::star_1,
+        (21, 2) => day_21::star_2,
+        (22, 1) => day_22::star_1,
+        (22, 2) => day_22::star_2,
+        (23, 1) => day_23::star_1,
+        (23, 2) => day_23::star_2,
+        (24, 1) => day_24::star_1,
+        (24, 2) => day_24::star_2,
+        (25, 1) => day_25::star_1,
+        (25, 2) => day_25::star_2,
         _ => {
             println!("Invalid day and/or star.");
             return;

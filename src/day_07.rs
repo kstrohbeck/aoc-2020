@@ -1,3 +1,4 @@
+use crate::utils::u32_;
 use nom::{
     branch::alt,
     bytes::complete::tag,
@@ -130,10 +131,6 @@ fn contained(input: &str) -> IResult<&str, Contained> {
     let (input, _) = space1(input)?;
     let (input, bag) = bag(input)?;
     Ok((input, Contained { bag, amount }))
-}
-
-fn u32_(input: &str) -> IResult<&str, u32> {
-    map_res(digit1, |s: &str| s.parse::<u32>())(input)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

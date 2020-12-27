@@ -1,8 +1,8 @@
+use crate::utils::u32_;
 use nom::{
     branch::alt,
     character::complete::{anychar, digit1},
     combinator::{map, map_opt, map_res},
-    sequence::tuple,
     IResult,
 };
 
@@ -162,10 +162,6 @@ fn movement(input: &str) -> IResult<&str, (Option<Direction>, u32)> {
     })(input)?;
     let (input, amt) = u32_(input)?;
     Ok((input, (dir, amt)))
-}
-
-fn u32_(input: &str) -> IResult<&str, u32> {
-    map_res(digit1, |s: &str| s.parse::<u32>())(input)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
